@@ -24,16 +24,21 @@ export class Game {
       backgroundColor: 0x1099bb,
     });
 
+    await this.grid.init(this.container);
+
+    // Now initiate the player
+    await this.player.init();
+
+    setupInput(this.app, this.container, this.player, this.grid);
+
     this.app.stage.addChild(this.container);
     document.body.appendChild(this.app.canvas);
     this.app.ticker.add(this.update.bind(this));
+
+    this.init();
   }
 
-  public async init() {
-    await this.grid.init(this.container);
-    await this.player.init();
-    setupInput(this.app, this.container, this.player, this.grid);
-  }
+  public async init() {}
 
   private update(ticker: Ticker) {
     this.player.update(ticker);

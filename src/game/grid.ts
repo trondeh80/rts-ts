@@ -77,7 +77,7 @@ export class Grid {
     const gridX = Math.floor(x / CELL_SIZE);
     const gridY = Math.floor(y / CELL_SIZE);
     const isWalkable = this.cells[gridY] && this.cells[gridY][gridX] === 0;
-    console.log(`Checking walkability at (${gridX}, ${gridY}): ${isWalkable}`);
+    // console.log(`Checking walkability at (${gridX}, ${gridY}): ${isWalkable}`);
     return isWalkable;
   }
 

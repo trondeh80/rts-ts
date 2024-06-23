@@ -24,8 +24,10 @@ export function setupInput(
     event.preventDefault();
     if (selectedPlayer) {
       const rect = app.canvas.getBoundingClientRect();
-      const x = event.clientX - rect.left + container.x;
-      const y = event.clientY - rect.top + container.y;
+
+      const x = event.clientX - rect.left - container.x;
+      const y = event.clientY - rect.top - container.y;
+
       selectedPlayer.moveTo(x, y);
     }
   });
