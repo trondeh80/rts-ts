@@ -24,7 +24,7 @@ export class Player {
     this.sprite.width = 32;
     this.sprite.height = 32;
 
-    const { x, y } = await this.getStartPosition();
+    const { x, y } = this.getStartPosition();
 
     this.sprite.x = x; // 400;
     this.sprite.y = y; // 300;
@@ -34,7 +34,7 @@ export class Player {
     this.container.addChild(this.sprite);
   }
 
-  private async getStartPosition(): Promise<{ x: number; y: number }> {
+  private getStartPosition(): { x: number; y: number } {
     const x = Math.floor(Math.random() * 800); // this.container.width); // Todo: Fix this
     const y = Math.floor(Math.random() * 600); // this.container.height);
     if (!this.grid.isWalkable(x, y)) {
