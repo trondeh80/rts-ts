@@ -84,4 +84,8 @@ export class Grid {
   public getCellSize(): number {
     return CELL_SIZE;
   }
+
+  public getCells() {
+    return this.cells;
+  }
 }

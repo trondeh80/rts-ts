@@ -1,3 +1,4 @@
+// game/pathfinder.ts
 import { Grid } from "./grid";
 
 class PriorityQueue<T> {
@@ -39,6 +40,10 @@ export class Pathfinder {
       y: Math.floor(end.y / this.cellSize),
     };
 
+    if (startNode.x === endNode.x && startNode.y === endNode.y) {
+      return [{ x: start.x, y: start.y }];
+    }
+
     const frontier = new PriorityQueue<{ x: number; y: number }>();
     frontier.enqueue(startNode, 0);
 
@@ -52,10 +57,10 @@ export class Pathfinder {
       { x: -1, y: 0 },
       { x: 0, y: 1 },
       { x: 0, y: -1 },
-      { x: 1, y: 1 }, // Diagonal up-right
-      { x: -1, y: 1 }, // Diagonal up-left
-      { x: 1, y: -1 }, // Diagonal down-right
-      { x: -1, y: -1 }, // Diagonal down-left
+      { x: 1, y: 1 },
+      { x: -1, y: 1 },
+      { x: 1, y: -1 },
+      { x: -1, y: -1 },
     ];
 
     while (!frontier.isEmpty()) {
@@ -72,21 +77,21 @@ export class Pathfinder {
               next.x * this.cellSize,
               next.y * this.cellSize
             )
-          )
+          ) {
             continue;
+          }
 
           const newCost = (costSoFar.get(`${current.x},${current.y}`) || 0) + 1;
+          const nextKey = `${next.x},${next.y}`;
+
           if (
-            !costSoFar.has(`${next.x},${next.y}`) ||
-            newCost < (costSoFar.get(`${next.x},${next.y}`) || Infinity)
+            !costSoFar.has(nextKey) ||
+            newCost < (costSoFar.get(nextKey) || Infinity)
           ) {
-            costSoFar.set(`${next.x},${next.y}`, newCost);
-
-            // Calculate the priority by adding the manhattan distance
+            costSoFar.set(nextKey, newCost);
             const priority = newCost + this.manhattanDistance(next, endNode);
-
             frontier.enqueue(next, priority);
-            cameFrom.set(`${next.x},${next.y}`, current);
+            cameFrom.set(nextKey, current);
           }
         }
       }
